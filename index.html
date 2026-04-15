@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Petrobras Secure AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 🔷 NAVBAR -->
+<nav class="navbar">
+  <div class="logo">BR PETROBRAS</div>
+  <div id="clock"></div>
+
+  <ul>
+    <li onclick="goHome()">Início</li>
+    <li onclick="showMonitor()">Monitoramento</li>
+    <li onclick="showSupport()">Suporte</li>
+    <li onclick="logout()">Sair</li>
+  </ul>
+</nav>
+
+<!-- 🔐 LOGIN -->
+<section class="login" id="loginScreen">
+  <h2>Acesso Seguro</h2>
+  <input type="text" id="username" placeholder="Usuário">
+  <select id="role">
+    <option value="basico">Básico</option>
+    <option value="tecnico">Técnico</option>
+    <option value="admin">Administrador</option>
+  </select>
+  <button onclick="login()">Entrar</button>
+</section>
+
+<!-- 💬 CHAT -->
+<section class="chat hidden" id="chatSection">
+  <h2>Assistente Corporativo</h2>
+
+  <div id="chatBox"></div>
+
+  <input type="text" id="userInput" placeholder="Digite...">
+  <button onclick="sendMessage()">Enviar</button>
+
+  <br><br>
+
+  <button onclick="reportLost()">🚨 Perdi os Óculos</button>
+  <button onclick="toggleDevice()">🔄 Alternar Status</button>
+
+  <div id="lostPanel" class="hidden">
+    <h3>Recuperação</h3>
+    <input type="text" id="deviceCode" placeholder="Código">
+    <input type="password" id="biometric" placeholder="Biometria">
+    <button onclick="recoverDevice()">Validar</button>
+  </div>
+</section>
+
+<!-- 📊 MONITORAMENTO -->
+<section id="monitorScreen" class="hidden">
+  <h2>Monitoramento do Dispositivo</h2>
+
+  <p><strong>ID:</strong> <span id="mon_id"></span></p>
+  <p><strong>Status:</strong> <span id="mon_status"></span></p>
+  <p><strong>Última Atualização:</strong> <span id="mon_time"></span></p>
+
+  <button onclick="goHome()">Voltar</button>
+</section>
+
+<!-- 📞 SUPORTE -->
+<section id="supportScreen" class="hidden">
+  <h2>Suporte Técnico</h2>
+  <a href="tel:+5511999999999">📞 +55 11 99999-9999</a>
+  <br><br>
+  <button onclick="goHome()">Voltar</button>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

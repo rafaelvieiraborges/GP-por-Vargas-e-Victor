@@ -1,0 +1,73 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f4f4;
+}
+
+.navbar {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 3px solid #009739;
+  align-items: center;
+}
+
+.logo {
+  color: #009739;
+  font-weight: bold;
+}
+
+#clock {
+  font-weight: bold;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.navbar li {
+  cursor: pointer;
+  color: #009739;
+  font-weight: bold;
+}
+
+.login, .chat, #monitorScreen, #supportScreen {
+  text-align: center;
+  margin-top: 40px;
+}
+
+input, select, button {
+  padding: 10px;
+  margin: 5px;
+}
+
+button {
+  background: #ffcc00;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#chatBox {
+  width: 60%;
+  height: 300px;
+  margin: auto;
+  background: #111;
+  color: white;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+#lostPanel {
+  background: #222;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+}
