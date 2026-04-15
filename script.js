@@ -1,4 +1,5 @@
 let user = null;
+let lastActivity = Date.now();
 
 // 🥽 DISPOSITIVO
 let device = {
@@ -28,6 +29,8 @@ function login() {
 
   document.getElementById("loginScreen").classList.add("hidden");
   document.getElementById("chatSection").classList.remove("hidden");
+
+  logSecurity("LOGIN", username);
 }
 
 // 🔓 LOGOUT
@@ -35,16 +38,14 @@ function logout() {
   location.reload();
 }
 
-// 🔙 HOME
+// 🧭 NAVEGAÇÃO
 function goHome() {
   hideAll();
   document.getElementById("chatSection").classList.remove("hidden");
 }
 
-// 📊 MONITORAMENTO
 function showMonitor() {
   hideAll();
-
   document.getElementById("monitorScreen").classList.remove("hidden");
 
   document.getElementById("mon_id").innerText = device.id;
@@ -52,20 +53,18 @@ function showMonitor() {
   document.getElementById("mon_time").innerText = device.lastUpdate;
 }
 
-// 📞 SUPORTE
 function showSupport() {
   hideAll();
   document.getElementById("supportScreen").classList.remove("hidden");
 }
 
-// 🧼 ESCONDER TUDO
 function hideAll() {
   document.getElementById("chatSection").classList.add("hidden");
   document.getElementById("monitorScreen").classList.add("hidden");
   document.getElementById("supportScreen").classList.add("hidden");
 }
 
-// 🚨 PERDI
+// 🚨 PERDI ÓCULOS
 function reportLost() {
   device.status = "BLOQUEADO";
   device.bloqueado = true;
@@ -73,23 +72,24 @@ function reportLost() {
 
   document.getElementById("lostPanel").classList.remove("hidden");
 
-  alert("Dispositivo bloqueado!");
+  logSecurity("DISPOSITIVO PERDIDO", device.id);
 }
 
-// 🔄 ALTERNAR STATUS
+// 🔐 BLOQUEAR MANUAL (NÃO DESBLOQUEIA!)
 function toggleDevice() {
-  if (device.status === "ATIVO") {
-    device.status = "BLOQUEADO";
-    device.bloqueado = true;
-  } else {
-    device.status = "ATIVO";
-    device.bloqueado = false;
+  if (device.bloqueado) {
+    alert("Use biometria para desbloquear.");
+    return;
   }
 
+  device.status = "BLOQUEADO";
+  device.bloqueado = true;
+
   updateDevice();
+  logSecurity("BLOQUEIO MANUAL", device.id);
 }
 
-// 🔓 RECUPERAR
+// 🔓 RECUPERAÇÃO SEGURA
 function recoverDevice() {
   const code = document.getElementById("deviceCode").value;
   const bio = document.getElementById("biometric").value;
@@ -99,39 +99,94 @@ function recoverDevice() {
     device.bloqueado = false;
     updateDevice();
 
-    alert("Recuperado!");
+    document.getElementById("lostPanel").classList.add("hidden");
+
+    logSecurity("RECUPERAÇÃO", device.id);
+    alert("Dispositivo liberado com segurança");
   } else {
-    alert("Erro na validação");
+    logSecurity("FALHA BIOMETRIA", "tentativa");
+    alert("Erro na autenticação");
   }
 }
 
-// 📡 ATUALIZA STATUS
+// 📡 UPDATE
 function updateDevice() {
   device.lastUpdate = new Date().toLocaleTimeString();
-  console.log("📡 Atualização:", device);
 }
 
 // 💬 CHAT
 function sendMessage() {
   if (device.bloqueado) {
-    addMessage("Sistema", "🚫 Dispositivo bloqueado");
+    addMsg("Sistema", "🚫 Dispositivo bloqueado", "bot");
     return;
   }
 
-  const input = document.getElementById("userInput");
-  const msg = input.value;
+  updateActivity();
 
-  addMessage("Você", msg);
-  addMessage("IA", "✔️ Resposta segura");
+  const input = document.getElementById("userInput");
+  const msg = input.value.toLowerCase();
+
+  addMsg("Você", msg, "user");
+
+  const response = secureAI(msg);
+
+  addMsg("IA", response, "bot");
 
   input.value = "";
 }
 
-// UI
-function addMessage(sender, text) {
-  const chat = document.getElementById("chatBox");
-  const el = document.createElement("p");
+// 🛡️ IA SEGURA
+function secureAI(msg) {
 
+  // DADOS SENSÍVEIS
+  if (
+    msg.includes("cpf") ||
+    msg.includes("rg") ||
+    msg.includes("senha") ||
+    msg.includes("dados de funcionários")
+  ) {
+    logSecurity("TENTATIVA VAZAMENTO", msg);
+    return "🚫 Acesso negado: dados sensíveis.";
+  }
+
+  // ATAQUE
+  if (
+    msg.includes("hack") ||
+    msg.includes("burlar") ||
+    msg.includes("invadir")
+  ) {
+    logSecurity("ATAQUE DETECTADO", msg);
+    return "⚠️ Ação suspeita registrada.";
+  }
+
+  return "✔️ Consulta segura.";
+}
+
+// 🔐 LOG
+function logSecurity(type, data) {
+  console.log("🔐 LOG:", type, data);
+}
+
+// ⏱️ INATIVIDADE
+setInterval(() => {
+  if (Date.now() - lastActivity > 60000) {
+    alert("Sessão encerrada por segurança.");
+    logout();
+  }
+}, 10000);
+
+function updateActivity() {
+  lastActivity = Date.now();
+}
+
+// UI
+function addMsg(sender, text, type) {
+  const chat = document.getElementById("chatBox");
+  const el = document.createElement("div");
+
+  el.className = `msg ${type}`;
   el.innerHTML = `<strong>${sender}:</strong> ${text}`;
+
   chat.appendChild(el);
+  chat.scrollTop = chat.scrollHeight;
 }

@@ -7,11 +7,9 @@
 </head>
 <body>
 
-<!-- 🔷 NAVBAR -->
 <nav class="navbar">
   <div class="logo">BR PETROBRAS</div>
   <div id="clock"></div>
-
   <ul>
     <li onclick="goHome()">Início</li>
     <li onclick="showMonitor()">Monitoramento</li>
@@ -20,57 +18,56 @@
   </ul>
 </nav>
 
-<!-- 🔐 LOGIN -->
-<section class="login" id="loginScreen">
+<section id="loginScreen" class="center">
   <h2>Acesso Seguro</h2>
   <input type="text" id="username" placeholder="Usuário">
-  <select id="role">
-    <option value="basico">Básico</option>
-    <option value="tecnico">Técnico</option>
-    <option value="admin">Administrador</option>
-  </select>
   <button onclick="login()">Entrar</button>
 </section>
 
-<!-- 💬 CHAT -->
-<section class="chat hidden" id="chatSection">
-  <h2>Assistente Corporativo</h2>
+<section id="chatSection" class="hidden dashboard">
+  <div class="panel">
 
-  <div id="chatBox"></div>
+    <h2>Assistente Corporativo</h2>
 
-  <input type="text" id="userInput" placeholder="Digite...">
-  <button onclick="sendMessage()">Enviar</button>
+    <div id="chatBox"></div>
 
-  <br><br>
+    <div class="inputArea">
+      <input type="text" id="userInput" placeholder="Digite...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
 
-  <button onclick="reportLost()">🚨 Perdi os Óculos</button>
-  <button onclick="toggleDevice()">🔄 Alternar Status</button>
+    <div class="actions">
+      <button onclick="reportLost()">🚨 Perdi os Óculos</button>
+      <button onclick="toggleDevice()">🔄 Bloquear Dispositivo</button>
+    </div>
 
-  <div id="lostPanel" class="hidden">
-    <h3>Recuperação</h3>
-    <input type="text" id="deviceCode" placeholder="Código">
-    <input type="password" id="biometric" placeholder="Biometria">
-    <button onclick="recoverDevice()">Validar</button>
+    <div id="lostPanel" class="hidden lostPanel">
+      <h3>Recuperação</h3>
+      <input type="text" id="deviceCode" placeholder="Código">
+      <input type="password" id="biometric" placeholder="Biometria">
+      <button onclick="recoverDevice()">Validar</button>
+    </div>
+
   </div>
 </section>
 
-<!-- 📊 MONITORAMENTO -->
-<section id="monitorScreen" class="hidden">
-  <h2>Monitoramento do Dispositivo</h2>
-
-  <p><strong>ID:</strong> <span id="mon_id"></span></p>
-  <p><strong>Status:</strong> <span id="mon_status"></span></p>
-  <p><strong>Última Atualização:</strong> <span id="mon_time"></span></p>
-
-  <button onclick="goHome()">Voltar</button>
+<section id="monitorScreen" class="hidden center">
+  <div class="panel">
+    <h2>Monitoramento</h2>
+    <p>ID: <span id="mon_id"></span></p>
+    <p>Status: <span id="mon_status"></span></p>
+    <p>Última atualização: <span id="mon_time"></span></p>
+    <button onclick="goHome()">Voltar</button>
+  </div>
 </section>
 
-<!-- 📞 SUPORTE -->
-<section id="supportScreen" class="hidden">
-  <h2>Suporte Técnico</h2>
-  <a href="tel:+5511999999999">📞 +55 11 99999-9999</a>
-  <br><br>
-  <button onclick="goHome()">Voltar</button>
+<section id="supportScreen" class="hidden center">
+  <div class="panel">
+    <h2>Suporte</h2>
+    <a href="tel:+5511999999999">📞 +55 11 99999-9999</a>
+    <br><br>
+    <button onclick="goHome()">Voltar</button>
+  </div>
 </section>
 
 <script src="script.js"></script>
